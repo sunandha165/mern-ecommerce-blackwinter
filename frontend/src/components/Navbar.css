@@ -1,0 +1,80 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap");
+/* HOME NAVBAR */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 22px 48px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  background: transparent;
+  z-index: 50;
+}
+
+/* LEFT: LOGO + BRAND (VERTICAL) */
+.nav-left {
+  display: flex;
+  flex-direction: column;   /* STACK */
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.nav-left img {
+  height: 50px;             /* same as before */
+  width: auto;
+}
+
+.brand-text {
+  font-family: "Libre Baskerville", "Times New Roman", serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  font-weight: 500;
+  color: #000;
+}
+
+
+
+/* CENTER: LINKS */
+.nav-center {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.nav-center a {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.nav-center a:hover {
+  opacity: 0.7;
+}
+
+/* RIGHT: ICONS */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.nav-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: #ffffff;
+  stroke-width: 1.6;
+  fill: none;
+}

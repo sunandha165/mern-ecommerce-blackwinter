@@ -1,0 +1,172 @@
+.home {
+  width: 100%;
+  font-family: Georgia, serif;
+}
+
+/* ===== HERO ===== */
+.hero {
+  height: 100vh;
+  background: url("/heroo.jpg") center 25% / cover no-repeat;
+  display: flex;
+  align-items: center;
+  padding-left: 2%;
+}
+
+.hero-content {
+  max-width: 520px;
+  color: white;
+}
+
+.hero-sub {
+  letter-spacing: 3px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-size: 64px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.hero-desc {
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.hero-btn {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 12px 24px;
+  cursor: pointer;
+}
+
+/* FEATURED PRODUCTS */
+.featured {
+  padding: 80px 60px;
+  background: #ffffff;
+}
+
+.section-title {
+  font-size: 20px;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.product-card img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+}
+
+.product-card p {
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.product-card span {
+  font-size: 13px;
+  color: #555;
+}
+
+/* BRAND STATEMENT */
+.brand-statement {
+  padding: 60px 20px;
+  text-align: center;
+  background: #f8f8f8;
+}
+
+.brand-statement p {
+  font-size: 18px;
+  max-width: 600px;
+  margin: auto;
+  line-height: 1.6;
+}
+
+/* FOOTER */
+.footer {
+  padding: 40px 20px;
+  background: #000;
+  color: #fff;
+  text-align: center;
+}
+
+.footer h3 {
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.footer ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-size: 14px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .featured {
+    padding: 60px 20px;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-card img {
+    height: 360px;
+  }
+}
+.product-card {
+  cursor: pointer;
+}
+
+.product-card img {
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+
+/* TRUST STRIP */
+/* TRUST STRIP */
+.trust {
+  display: flex;
+  justify-content: center;
+  gap: 290px;              /* SPACE BETWEEN EACH ICON BLOCK */
+  padding: 80px 20px;     /* SPACE TOP & BOTTOM */
+  background: #ffffff;
+  text-align: center;
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;              /* SPACE BETWEEN ICON & TEXT */
+  font-size: 14px;
+  color: #111;
+}
+
+.trust-icon {
+  font-size: 32px;        /* ICON SIZE */
+  line-height: 1;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .trust {
+    flex-direction: column;
+    gap: 40px;            /* SPACE BETWEEN ITEMS ON MOBILE */
+  }
+}
