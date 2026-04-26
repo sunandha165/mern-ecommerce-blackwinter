@@ -10,6 +10,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 
 /* ADMIN PAGES */
+import AdminRoute from "./pages/AdminRoute";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
@@ -31,7 +32,16 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
 
         {/* ADMIN */}
-        <Route path="/admin" element={<AdminDashboard />} />
+        import AdminRoute from "./pages/AdminRoute";
+
+<Route
+  path="/admin"
+  element={
+    <AdminRoute>
+      <AdminDashboard />
+    </AdminRoute>
+  }
+/>
         <Route path="/admin/products" element={<AdminProducts />} />
         <Route path="/admin/add-product" element={<AdminAddProduct />} />
         <Route path="/admin/edit-product/:id" element={<AdminEditProduct />} />

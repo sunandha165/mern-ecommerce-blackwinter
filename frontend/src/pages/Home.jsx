@@ -13,6 +13,7 @@ const Home = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get("http://localhost:5000/api/products");
+        console.log("HOME DATA:", res.data); // 👈 ADD THIS
         setFeatured(res.data.slice(0, 3)); // show first 3
       } catch (error) {
         console.error("Error loading products");
@@ -41,24 +42,20 @@ const Home = () => {
         <h2 className="section-title">Featured Collection</h2>
 
         <div className="product-grid">
-          {featured.map((p) => {
-            const imagePath = p.image || p.images?.[0] || "";
-
-            return (
-              <Link
-                to={`/product/${p._id}`}
-                className="product-card"
-                key={p._id}
-              >
-                <img
-                  src={`http://localhost:5000${imagePath}`}
-                  alt={p.name}
-                />
-                <p>{p.name}</p>
-                <span>₹{p.price}</span>
-              </Link>
-            );
-          })}
+          {featured.map((p) => (
+            <Link
+              to={`/product/${p._id}`}
+              className="product-card"
+              key={p._id}
+            >
+              <img
+                src={p.image || "https://via.placeholder.com/200"}
+                alt={p.name}
+              />
+              <p>{p.name}</p>
+              <span>₹{p.price}</span>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -90,9 +87,7 @@ const Home = () => {
         <h2>About BLACKWINTER</h2>
         <p>
           BLACKWINTER is a modern streetwear clothing brand focused on minimal
-          aesthetics, premium comfort, and bold identity. Our collections are
-          designed for individuals who value style, confidence, and everyday
-          versatility.
+          aesthetics, premium comfort, and bold identity.
         </p>
       </section>
 

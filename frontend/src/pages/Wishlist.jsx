@@ -7,7 +7,6 @@ const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
   const token = localStorage.getItem("token");
 
-  /* ================= FETCH WISHLIST ================= */
   const fetchWishlist = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/wishlist", {
@@ -15,8 +14,6 @@ const Wishlist = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      console.log("Wishlist Data:", res.data); // ⭐ debug
 
       setWishlist(res.data || []);
     } catch (err) {
@@ -28,7 +25,6 @@ const Wishlist = () => {
     fetchWishlist();
   }, []);
 
-  /* ================= ADD TO CART ================= */
   const addToCart = async (productId) => {
     try {
       await axios.post(
@@ -47,7 +43,6 @@ const Wishlist = () => {
     }
   };
 
-  /* ================= REMOVE FROM WISHLIST ================= */
   const removeFromWishlist = async (id) => {
     try {
       const res = await axios.delete(
@@ -78,13 +73,11 @@ const Wishlist = () => {
             {wishlist.map((product) => {
               if (!product) return null;
 
-              const imagePath =
-                product.image || product.images?.[0] || "";
-
               return (
                 <div className="wishlist-card" key={product._id}>
+                  {/* ✅ FIXED */}
                   <img
-                    src={`http://localhost:5000${imagePath}`}
+                    src={product.image || "https://via.placeholder.com/200"}
                     alt={product.name}
                   />
 

@@ -1,27 +1,24 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FiSearch } from "react-icons/fi";
-import { FiHeart } from "react-icons/fi";
-import { FiShoppingBag } from "react-icons/fi";
-import { FiUser } from "react-icons/fi";
+import { FiSearch, FiHeart, FiShoppingBag, FiUser } from "react-icons/fi";
 import { useState } from "react";
 import LoginDrawer from "./LoginDrawer";
 import SearchOverlay from "./SearchOverlay";
-
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === "/";
+
   const [openLogin, setOpenLogin] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
 
-
+  // ✅ NEW (mobile menu)
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
       <nav style={nav(isHome)}>
         {/* LEFT */}
-
         <div style={left}>
           {isHome && (
             <img
@@ -42,31 +39,37 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* CENTER */}
-        <div style={center}>
-            <Link to="/" style={menuLink}>Home</Link>
+        {/* ✅ HAMBURGER (only mobile) */}
+        <div style={menuIcon} onClick={() => setMenuOpen(!menuOpen)}>
+          ☰
+        </div>
 
-<Link to="/products" style={menuLink}>Shop All</Link>
-<a href="/#about" style={menuLink}>About</a>
-<a href="/#contact" style={menuLink}>Contact</a>
+        {/* CENTER */}
+        <div style={menuOpen ? mobileMenu : center}>
+          <Link to="/" style={menuLink}>Home</Link>
+          <Link to="/products" style={menuLink}>Shop All</Link>
+          <a href="/#about" style={menuLink}>About</a>
+          <a href="/#contact" style={menuLink}>Contact</a>
         </div>
 
         {/* RIGHT */}
         <div style={right}>
-<FiSearch style={icon} onClick={() => setOpenSearch(true)} />
-
+          <FiSearch style={icon} onClick={() => setOpenSearch(true)} />
           <FiHeart style={icon} onClick={() => navigate("/wishlist")} />
           <FiShoppingBag style={icon} onClick={() => navigate("/cart")} />
           <FiUser style={icon} onClick={() => setOpenLogin(true)} />
         </div>
       </nav>
+
       <SearchOverlay
-  open={openSearch}
-  onClose={() => setOpenSearch(false)}
-/>
+        open={openSearch}
+        onClose={() => setOpenSearch(false)}
+      />
 
-
-      <LoginDrawer open={openLogin} onClose={() => setOpenLogin(false)} />
+      <LoginDrawer
+        open={openLogin}
+        onClose={() => setOpenLogin(false)}
+      />
     </>
   );
 }
@@ -88,7 +91,32 @@ const nav = (isHome) => ({
 
 const left = { fontWeight: 600 };
 
-const center = { display: "flex", gap: 30 };
+const center = {
+  display: "flex",
+  gap: 30,
+};
+
+/* ✅ MOBILE MENU STYLE */
+const mobileMenu = {
+  position: "absolute",
+  top: "70px",
+  left: 0,
+  width: "100%",
+  background: "#000",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: 20,
+  padding: "20px 0",
+};
+
+/* ✅ HAMBURGER ICON */
+const menuIcon = {
+  display: "none",
+  fontSize: 24,
+  cursor: "pointer",
+  color: "#fff",
+};
 
 const brand = {
   color: "#fff",
@@ -109,3 +137,9 @@ const icon = {
   cursor: "pointer",
   color: "#fff",
 };
+
+/* ✅ RESPONSIVE */
+if (window.innerWidth <= 768) {
+  center.display = "none";
+  menuIcon.display = "block";
+}

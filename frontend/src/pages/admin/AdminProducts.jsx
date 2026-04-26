@@ -10,10 +10,19 @@ const AdminProducts = () => {
   /* ================= FETCH PRODUCTS ================= */
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/products");
-      setProducts(res.data || []);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/products`
+      );
+
+      // ✅ Ensure always array
+      if (Array.isArray(res.data)) {
+        setProducts(res.data);
+      } else {
+        setProducts([]);
+      }
     } catch (error) {
       console.error("Error loading products");
+      setProducts([]);
     }
   };
 
@@ -28,7 +37,7 @@ const AdminProducts = () => {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/admin/products/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -64,35 +73,32 @@ const AdminProducts = () => {
         </thead>
 
         <tbody>
-          {products.map((p) => {
-            const imagePath =
-              p.image || p.images?.[0] || "";
+          {/* ✅ Safe rendering */}
+          {Array.isArray(products) &&
+            products.map((p) => {
+              return (
+                <tr key={p._id}>
+                  <td>
+                    <img src={p.image} width="60" alt={p.name} />
+                  </td>
+                  <td>{p.name}</td>
+                  <td>₹{p.price}</td>
+                  <td>{p.category}</td>
+                  <td>
+                    <Link to={`/admin/edit-product/${p._id}`}>
+                      Edit
+                    </Link>
 
-            return (
-              <tr key={p._id}>
-                <td>
-                  <img
-                    src={`http://localhost:5000${imagePath}`}
-                    alt=""
-                    width="60"
-                  />
-                </td>
-                <td>{p.name}</td>
-                <td>₹{p.price}</td>
-                <td>{p.category}</td>
-                <td>
-                  <Link to={`/admin/edit-product/${p._id}`}>Edit</Link>
-
-                  <button
-                    className="delete-btn"
-                    onClick={() => deleteProduct(p._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
+                    <button
+                      className="delete-btn"
+                      onClick={() => deleteProduct(p._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

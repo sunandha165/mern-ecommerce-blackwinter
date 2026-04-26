@@ -9,7 +9,6 @@ const Cart = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
-  /* ================= FETCH CART ================= */
   const fetchCart = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/cart", {
@@ -27,7 +26,6 @@ const Cart = () => {
     fetchCart();
   }, []);
 
-  /* ================= UPDATE QTY ================= */
   const updateQty = async (itemId, newQty) => {
     if (newQty < 1) return;
 
@@ -47,7 +45,6 @@ const Cart = () => {
     }
   };
 
-  /* ================= REMOVE ITEM ================= */
   const removeItem = async (itemId) => {
     try {
       const res = await axios.delete(
@@ -64,9 +61,10 @@ const Cart = () => {
     }
   };
 
-  /* ================= TOTAL ================= */
+  // ✅ SAFE TOTAL
   const total = cart.reduce(
-    (sum, item) => sum + item.product.price * item.qty,
+    (sum, item) =>
+      sum + (item.product?.price || 0) * item.qty,
     0
   );
 
@@ -81,68 +79,74 @@ const Cart = () => {
           <p style={{ textAlign: "center" }}>Cart is empty</p>
         ) : (
           <div className="cart-container">
-            {/* LEFT - CART ITEMS */}
             <div className="cart-items">
-              {cart.map((item) => (
-                <div className="cart-item" key={item._id}>
-                  <img
-                    src={`http://localhost:5000${
-                      item.product.image || item.product.images?.[0]
-                    }`}
-                    alt={item.product.name}
-                  />
 
-                  <div className="cart-info">
-                    <p className="cart-name">{item.product.name}</p>
-                    <span className="cart-price">
-                      ₹{item.product.price}
-                    </span>
+              {cart.map((item) => {
+                // 🔥 HANDLE NULL PRODUCT
+                if (!item.product) {
+                  return (
+                    <div className="cart-item" key={item._id}>
+                      <p>⚠️ Product no longer available</p>
 
-                    <div className="cart-qty">
                       <button
-                        onClick={() =>
-                          updateQty(item._id, item.qty - 1)
-                        }
+                        onClick={() => removeItem(item._id)}
                       >
-                        -
-                      </button>
-                      <span>{item.qty}</span>
-                      <button
-                        onClick={() =>
-                          updateQty(item._id, item.qty + 1)
-                        }
-                      >
-                        +
+                        Remove
                       </button>
                     </div>
+                  );
+                }
 
-                    <button
-                      className="remove-btn"
-                      onClick={() => removeItem(item._id)}
-                    >
-                      Remove
-                    </button>
+                return (
+                  <div className="cart-item" key={item._id}>
+                    {/* ✅ SAFE IMAGE */}
+                    <img
+                      src={item.product.image}
+                      alt={item.product.name}
+                    />
+
+                    <div className="cart-info">
+                      <p>{item.product.name}</p>
+                      <span>₹{item.product.price}</span>
+
+                      <div className="cart-qty">
+                        <button
+                          onClick={() =>
+                            updateQty(item._id, item.qty - 1)
+                          }
+                        >
+                          -
+                        </button>
+
+                        <span>{item.qty}</span>
+
+                        <button
+                          onClick={() =>
+                            updateQty(item._id, item.qty + 1)
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <button
+                        className="remove-btn"
+                        onClick={() => removeItem(item._id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
+
             </div>
 
-            {/* RIGHT - SUMMARY */}
-            <div className="cart-summary">
-              <h3>Order Summary</h3>
+            <h3>Total: ₹{total}</h3>
 
-              <div className="summary-row">
-                <span>Total</span>
-                <span>₹{total}</span>
-              </div>
-
-              <button
-                className="checkout-btn"
-                onClick={() => navigate("/checkout")}
-              >
-                Proceed to Checkout
-              </button>
-            </div>
+            <button onClick={() => navigate("/checkout")}>
+              Checkout
+            </button>
           </div>
         )}
       </section>

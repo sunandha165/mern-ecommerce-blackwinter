@@ -24,7 +24,7 @@ const AdminAddProduct = () => {
       formData.append("image", product.image);
 
       const res = await fetch(
-        "http://localhost:5000/api/admin/products",
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/products`,
         {
           method: "POST",
           headers: {
@@ -38,6 +38,15 @@ const AdminAddProduct = () => {
 
       if (res.ok) {
         alert("✅ Product Added Successfully");
+
+        // optional reset
+        setProduct({
+          name: "",
+          price: "",
+          category: "",
+          description: "",
+          image: null,
+        });
       } else {
         alert(data.message || "Error adding product");
       }

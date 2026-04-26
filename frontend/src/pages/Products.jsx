@@ -12,6 +12,7 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         const res = await api.get("/api/products");
+        console.log("PRODUCT PAGE DATA:", res.data); // 👈 ADD THIS
         setProducts(res.data || []);
       } catch (err) {
         console.error("Error loading products");
@@ -55,7 +56,7 @@ const Products = () => {
               className="product-card"
             >
               <img
-                src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`}
+                src={product.image || "https://via.placeholder.com/200"}
                 alt={product.name}
               />
               <p>{product.name}</p>

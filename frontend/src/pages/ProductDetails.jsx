@@ -14,12 +14,11 @@ const ProductDetails = () => {
 
   const token = localStorage.getItem("token");
 
-  /* ================= FETCH PRODUCT ================= */
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/products/${id}`
+          `http://localhost:5000/api/products/${id}`
         );
 
         const currentProduct = res.data;
@@ -34,16 +33,14 @@ const ProductDetails = () => {
     fetchProduct();
   }, [id]);
 
-  /* ================= FETCH RELATED PRODUCTS ================= */
   const fetchOtherProducts = async (currentProduct) => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/products`
+        `http://localhost:5000/api/products`
       );
 
       const all = res.data || [];
 
-      /* ===== SIMILAR PRODUCTS (CATEGORY MATCH) ===== */
       let similarItems = all.filter(
         (p) =>
           p.category &&
@@ -53,12 +50,10 @@ const ProductDetails = () => {
           p._id !== currentProduct._id
       );
 
-      /* ===== FALLBACK IF NO SIMILAR ===== */
       if (similarItems.length === 0) {
         similarItems = all.filter((p) => p._id !== currentProduct._id);
       }
 
-      /* ===== MORE PRODUCTS ===== */
       const more = all.filter((p) => p._id !== currentProduct._id);
 
       setSimilar(similarItems.slice(0, 3));
@@ -68,7 +63,6 @@ const ProductDetails = () => {
     }
   };
 
-  /* ================= ADD TO CART ================= */
   const handleAddToCart = async () => {
     try {
       await addToCart(product._id, 1);
@@ -78,7 +72,6 @@ const ProductDetails = () => {
     }
   };
 
-  /* ================= ADD TO WISHLIST ================= */
   const addToWishlist = async () => {
     if (!token) {
       alert("Please login to add to wishlist");
@@ -106,23 +99,11 @@ const ProductDetails = () => {
     <>
       <Navbar />
 
-      {/* BREADCRUMBS */}
-      <div className="breadcrumbs">
-        <Link to="/">Home</Link>
-        <span>/</span>
-        <Link to="/products">Shop</Link>
-        <span>/</span>
-        <span className="breadcrumb-current">
-          {product ? product.name : "Loading..."}
-        </span>
-      </div>
-
-      {/* PRODUCT DETAILS */}
       {product ? (
         <section className="product-detail">
           <div className="left">
             <img
-              src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`}
+              src={product.image}
               alt={product.name}
               className="mainImg"
             />
@@ -133,71 +114,49 @@ const ProductDetails = () => {
             <p className="prodPrice">₹{product.price}</p>
             <p className="prodDesc">{product.description}</p>
 
-            <div className="actions">
-              <input
-                type="number"
-                min="1"
-                defaultValue="1"
-                className="qtyInput"
-              />
-
-              <button className="addToCartBtn" onClick={handleAddToCart}>
-                Add to Cart
-              </button>
-
-              <button className="wishlistBtn" onClick={addToWishlist}>
-                ♡ Wishlist
-              </button>
-            </div>
+            <button onClick={handleAddToCart}>Add to Cart</button>
+            <button onClick={addToWishlist}>Wishlist</button>
           </div>
         </section>
       ) : (
-        <div className="product-loading">Loading product...</div>
+        <div>Loading...</div>
       )}
 
       {/* ================= SIMILAR PRODUCTS ================= */}
-      <section className="similar-section">
-        <h3 className="section-heading">Similar Products</h3>
+      <section>
+  <h3>Similar Products</h3>
 
-        <div className="products-grid">
-          {similar.map((p) => (
-            <Link
-              to={`/product/${p._id}`}
-              className="product-card"
-              key={p._id}
-            >
-              <img
-                src={`${import.meta.env.VITE_API_BASE_URL}${p.image}`}
-                alt={p.name}
-              />
-              <p>{p.name}</p>
-              <span>₹{p.price}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
+  <div className="products-grid">
+    {similar.map((p) => (
+      <div className="product-card" key={p._id}>
+        <Link to={`/product/${p._id}`}>
+          <img src={p.image} alt={p.name} />
+        </Link>
+
+        <p>{p.name}</p>
+        <span>₹{p.price}</span>
+      </div>
+    ))}
+  </div>
+</section>
 
       {/* ================= MORE PRODUCTS ================= */}
-      <section className="more-section">
-        <h3 className="section-heading">More Products You May Like</h3>
+     <section>
+  <h3>More Products</h3>
 
-        <div className="products-grid">
-          {moreProducts.map((p) => (
-            <Link
-              to={`/product/${p._id}`}
-              className="product-card"
-              key={p._id}
-            >
-              <img
-                src={`${import.meta.env.VITE_API_BASE_URL}${p.image}`}
-                alt={p.name}
-              />
-              <p>{p.name}</p>
-              <span>₹{p.price}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
+  <div className="products-grid">
+    {moreProducts.map((p) => (
+      <div className="product-card" key={p._id}>
+        <Link to={`/product/${p._id}`}>
+          <img src={p.image} alt={p.name} />
+        </Link>
+
+        <p>{p.name}</p>
+        <span>₹{p.price}</span>
+      </div>
+    ))}
+  </div>
+</section>
     </>
   );
 };
