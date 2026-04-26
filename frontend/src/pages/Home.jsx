@@ -12,8 +12,11 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products");
-        console.log("HOME DATA:", res.data); // 👈 ADD THIS
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/products`
+        );
+
+        console.log("HOME DATA:", res.data);
         setFeatured(res.data.slice(0, 3)); // show first 3
       } catch (error) {
         console.error("Error loading products");

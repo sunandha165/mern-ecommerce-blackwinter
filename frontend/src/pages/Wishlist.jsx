@@ -9,11 +9,14 @@ const Wishlist = () => {
 
   const fetchWishlist = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/wishlist", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/wishlist`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setWishlist(res.data || []);
     } catch (err) {
@@ -28,7 +31,7 @@ const Wishlist = () => {
   const addToCart = async (productId) => {
     try {
       await axios.post(
-        "http://localhost:5000/api/cart",
+        `${import.meta.env.VITE_API_BASE_URL}/api/cart`,
         { productId, qty: 1 },
         {
           headers: {
@@ -46,7 +49,7 @@ const Wishlist = () => {
   const removeFromWishlist = async (id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/wishlist/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -75,7 +78,6 @@ const Wishlist = () => {
 
               return (
                 <div className="wishlist-card" key={product._id}>
-                  {/* ✅ FIXED */}
                   <img
                     src={product.image || "https://via.placeholder.com/200"}
                     alt={product.name}

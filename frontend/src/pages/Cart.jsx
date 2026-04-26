@@ -11,11 +11,14 @@ const Cart = () => {
 
   const fetchCart = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/cart", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/cart`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setCart(res.data || []);
     } catch (err) {
       console.error("Error loading cart");
@@ -31,7 +34,7 @@ const Cart = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/cart/${itemId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/cart/${itemId}`,
         { qty: newQty },
         {
           headers: {
@@ -48,7 +51,7 @@ const Cart = () => {
   const removeItem = async (itemId) => {
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/cart/${itemId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/cart/${itemId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,8 +66,7 @@ const Cart = () => {
 
   // ✅ SAFE TOTAL
   const total = cart.reduce(
-    (sum, item) =>
-      sum + (item.product?.price || 0) * item.qty,
+    (sum, item) => sum + (item.product?.price || 0) * item.qty,
     0
   );
 
@@ -80,7 +82,6 @@ const Cart = () => {
         ) : (
           <div className="cart-container">
             <div className="cart-items">
-
               {cart.map((item) => {
                 // 🔥 HANDLE NULL PRODUCT
                 if (!item.product) {
@@ -88,9 +89,7 @@ const Cart = () => {
                     <div className="cart-item" key={item._id}>
                       <p>⚠️ Product no longer available</p>
 
-                      <button
-                        onClick={() => removeItem(item._id)}
-                      >
+                      <button onClick={() => removeItem(item._id)}>
                         Remove
                       </button>
                     </div>
@@ -99,7 +98,6 @@ const Cart = () => {
 
                 return (
                   <div className="cart-item" key={item._id}>
-                    {/* ✅ SAFE IMAGE */}
                     <img
                       src={item.product.image}
                       alt={item.product.name}
@@ -139,7 +137,6 @@ const Cart = () => {
                   </div>
                 );
               })}
-
             </div>
 
             <h3>Total: ₹{total}</h3>

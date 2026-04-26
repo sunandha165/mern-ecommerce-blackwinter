@@ -21,7 +21,7 @@ export default function SearchOverlay({ open, onClose }) {
 
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/products/search/${query}`
+          `${import.meta.env.VITE_API_BASE_URL}/api/products/search/${query}`
         );
 
         setResults(res.data || []);

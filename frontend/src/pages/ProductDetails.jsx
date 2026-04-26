@@ -18,7 +18,7 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/products/${id}`
+          `${import.meta.env.VITE_API_BASE_URL}/api/products/${id}`
         );
 
         const currentProduct = res.data;
@@ -36,7 +36,7 @@ const ProductDetails = () => {
   const fetchOtherProducts = async (currentProduct) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/products`
+        `${import.meta.env.VITE_API_BASE_URL}/api/products`
       );
 
       const all = res.data || [];
@@ -80,7 +80,7 @@ const ProductDetails = () => {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/wishlist/${product._id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${product._id}`,
         {},
         {
           headers: {
@@ -122,41 +122,41 @@ const ProductDetails = () => {
         <div>Loading...</div>
       )}
 
-      {/* ================= SIMILAR PRODUCTS ================= */}
+      {/* SIMILAR PRODUCTS */}
       <section>
-  <h3>Similar Products</h3>
+        <h3>Similar Products</h3>
 
-  <div className="products-grid">
-    {similar.map((p) => (
-      <div className="product-card" key={p._id}>
-        <Link to={`/product/${p._id}`}>
-          <img src={p.image} alt={p.name} />
-        </Link>
+        <div className="products-grid">
+          {similar.map((p) => (
+            <div className="product-card" key={p._id}>
+              <Link to={`/product/${p._id}`}>
+                <img src={p.image} alt={p.name} />
+              </Link>
 
-        <p>{p.name}</p>
-        <span>₹{p.price}</span>
-      </div>
-    ))}
-  </div>
-</section>
+              <p>{p.name}</p>
+              <span>₹{p.price}</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      {/* ================= MORE PRODUCTS ================= */}
-     <section>
-  <h3>More Products</h3>
+      {/* MORE PRODUCTS */}
+      <section>
+        <h3>More Products</h3>
 
-  <div className="products-grid">
-    {moreProducts.map((p) => (
-      <div className="product-card" key={p._id}>
-        <Link to={`/product/${p._id}`}>
-          <img src={p.image} alt={p.name} />
-        </Link>
+        <div className="products-grid">
+          {moreProducts.map((p) => (
+            <div className="product-card" key={p._id}>
+              <Link to={`/product/${p._id}`}>
+                <img src={p.image} alt={p.name} />
+              </Link>
 
-        <p>{p.name}</p>
-        <span>₹{p.price}</span>
-      </div>
-    ))}
-  </div>
-</section>
+              <p>{p.name}</p>
+              <span>₹{p.price}</span>
+            </div>
+          ))}
+        </div>
+      </section>
     </>
   );
 };
