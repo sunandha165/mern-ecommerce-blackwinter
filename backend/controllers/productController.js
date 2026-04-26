@@ -28,6 +28,7 @@ export const getProductById = async (req, res) => {
 /* ADMIN — CREATE PRODUCT */
 export const createProduct = async (req, res) => {
   try {
+    console.log("FILE:", req.file);
     const { name, price, category, description } = req.body;
 
     const product = await Product.create({
@@ -35,7 +36,7 @@ export const createProduct = async (req, res) => {
       price,
       category,
       description,
-      image: req.file ? `/uploads/products/${req.file.filename}` : "",
+      image: req.file.path,   // ✅ CLOUDINARY URL
     });
 
     res.status(201).json(product);
@@ -43,6 +44,7 @@ export const createProduct = async (req, res) => {
     console.error("CREATE PRODUCT ERROR:", error);
     res.status(500).json({ message: "Failed to create product" });
   }
+  
 };
 
 /* ADMIN — UPDATE PRODUCT */
@@ -60,7 +62,7 @@ export const updateProduct = async (req, res) => {
     product.description = req.body.description || product.description;
 
     if (req.file) {
-      product.image = `/uploads/products/${req.file.filename}`;
+      product.image = req.file.path;   // ✅ CLOUDINARY URL
     }
 
     const updated = await product.save();
@@ -97,6 +99,8 @@ export const getAdminProducts = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch products" });
   }
 };
+
+/* SEARCH PRODUCTS */
 export const searchProducts = async (req, res) => {
   try {
     const keyword = req.params.keyword;

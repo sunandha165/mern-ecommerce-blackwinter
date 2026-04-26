@@ -2,7 +2,7 @@ import express from "express";
 import { adminLogin } from "../controllers/adminController.js";
 import adminOnly from "../middleware/adminMiddleware.js";
 import { protect } from "../middleware/authMiddleware.js";
-import upload from "../middleware/uploadMiddleware.js";
+import upload from "../middleware/cloudUpload.js";
 
 import {
   createProduct,
