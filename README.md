@@ -58,6 +58,8 @@ User → React Frontend → Express Backend → MongoDB Database
 
 ### Architecture Diagram
 <img width="8192" height="3454" alt="image" src="https://github.com/user-attachments/assets/59a9bb6b-7269-4751-9a5f-97b8ee4eb2b2" />
+<img width="8192" height="3454" alt="image" src="https://github.com/user-attachments/assets/fb66a473-b143-4a22-9208-d11724da66f8" />
+
 
 
 ---
