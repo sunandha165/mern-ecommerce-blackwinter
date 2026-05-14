@@ -51,15 +51,14 @@ https://mern-ecommerce-blackwinter-ihug.vercel.app/
 ---
 
 # 🧠 System Architecture
-<img width="8192" height="3454" alt="image" src="https://github.com/user-attachments/assets/c6b30510-d0e7-4760-9cf7-1a65202534a6" />
-
 
 ## High-Level Architecture
 
 User → React Frontend → Express Backend → MongoDB Database
 
 ### Architecture Diagram
-(Add your architecture image here)
+<img width="8192" height="3454" alt="image" src="https://github.com/user-attachments/assets/59a9bb6b-7269-4751-9a5f-97b8ee4eb2b2" />
+
 
 ---
 
