@@ -13,18 +13,22 @@ https://mern-ecommerce-blackwinter-ihug.vercel.app/
 
 # 📌 Features
 
-- User Authentication (JWT)
-- Product Listing
-- Product Details Page
-- Add to Cart
-- Wishlist Feature
-- Responsive UI
-- REST API Integration
-- MongoDB Database
-- MERN Stack Architecture
-- Deployment using Vercel
+📌 Features
 
----
+• JWT-based User Authentication & Authorization
+• Role-based Admin Dashboard
+• Product Listing & Product Details Pages
+• Product Search Functionality
+• Add to Cart & Wishlist Functionality
+• Order Placement & Order Status Management
+• Admin Product Add / Update / Delete Operations
+• Cloudinary Image Upload & Management
+• Responsive UI for Mobile & Desktop
+• REST API Integration
+• MongoDB Database Integration
+• MERN Stack Architecture
+• Protected Routes & Secure Session Handling
+• Deployment using Vercel & Render
 
 # 🛠️ Tech Stack
 
@@ -124,13 +128,13 @@ npm start
 
 # 🌟 Future Improvements
 
-- Payment Gateway Integration
-- Cloudinary Image Upload
-- Order Tracking
-- Admin Dashboard
-- Product Search & Filters
-- Razorpay/Stripe Integration
-- Redux State Management
+• Payment Gateway Integration (Razorpay / Stripe)
+• Advanced Filtering & Sorting Options
+• Performance & API Optimization
+• Redux / Global State Management
+• Email Notifications & OTP Verification
+• Analytics Dashboard & User Insights
+• Caching & Scalability Improvements
 
 ---
 
